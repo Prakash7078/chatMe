@@ -50,8 +50,8 @@ function Chat() {
           
           <div className='dots' onClick={()=>setShowdots(!showdots)}><BsThreeDots/>
             {data.chatId && showdots && <div className="dotcon">
-              <a onClick={handleClear}>Clear</a><br/>
-              <a onClick={handleDelete}>UnFriend</a><br/>
+              <a onClick={handleClear} className="clear">Clear</a>
+              <a onClick={handleDelete}>UnFriend</a>
             </div>}
           </div>
         </div>

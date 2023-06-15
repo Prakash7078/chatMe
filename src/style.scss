@@ -158,6 +158,12 @@
     .searchform{
         border-bottom: 1px solid black;
         background-color: rgb(160, 252, 148);
+        display: flex;
+        align-items: center;
+        @include mobile{
+            justify-content: space-between;
+            padding-right: 15px;
+        }
         input{
             background-color: rgb(160, 250, 160);
             border: none;
@@ -166,6 +172,12 @@
                 color:rgb(90, 57, 57);
             }
             padding: 20px;
+        }
+        button{
+            background-color:greenyellow;
+            height:fit-content;
+            cursor: pointer;
+            border-radius: 5px;
         }
     }
     span{
@@ -244,12 +256,15 @@
             right: -20px;
             top:41px;    
             color:black;
+            display: flex;
+            flex-direction: column;
             font-weight:500;
             border-radius: 5px;
             background-color: rgb(255, 255, 255);
-            padding:9px;
-        }.dotcon a{
-            padding: 1px 3px 5px 11px;
+            padding:7px 12px;
+        }
+        .dotcon a{
+            margin-bottom: 15px;
         }
     }
     .chatIcons{
