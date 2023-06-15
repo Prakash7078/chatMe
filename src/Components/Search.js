@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from '../firebase';
 import { AuthContext } from '../ContextAPI/AuthContext';
+import { BsFillPersonPlusFill } from 'react-icons/bs';
 
 function Search() {
   const[userName,setUserName]=useState(" ");
@@ -9,15 +10,19 @@ function Search() {
   const[err,setErr]=useState(false);
   const {currentUser}=useContext(AuthContext);
   const handleSearch=async()=>{
+    setUser(null);
+    setErr(true);
     const q=query(collection(db,"users"),where("displayName","==",userName));
     try{
       const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setUser(doc.data());
+      querySnapshot.forEach((d) => {
+        setUser(d.data());
+        setErr(false);
       });
     }catch(err){
       setErr(true);
     }
+    
   };
   const handleKey=(e)=>{
     e.code==="Enter" && handleSearch();
@@ -51,7 +56,7 @@ function Search() {
       setErr(true);
     }
     setUser(null);
-    setUserName("");
+    setUserName(" ");
   }
   return (
     <div className='search'>
@@ -59,11 +64,13 @@ function Search() {
         <input type="text" placeholder='Search User'onChange={e=>setUserName(e.target.value)} onKeyDown={handleKey} />
       </div>
       {err && <span>User not Found!</span>}
-      {user && <div className="userChat" onClick={handleSelect}>
+      {user && <div className="userChat" >
         <img src={user.photoURL} alt="user"/>
         <div className="userChatInfo">
           <span>{user.displayName}</span>
-          <p>Hello</p>
+        </div>
+        <div className="addfrd">
+          <BsFillPersonPlusFill onClick={handleSelect}/>
         </div>
       </div>}
     </div>

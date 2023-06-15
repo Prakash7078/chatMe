@@ -5,6 +5,8 @@ import { createUserWithEmailAndPassword,updateProfile} from "firebase/auth";
 import {auth,storage,db} from '../firebase';
 import {ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore"; 
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 function Register() {
   const[err,setErr]=useState(false);
   const navigate=useNavigate();
@@ -29,12 +31,14 @@ function Register() {
               displayName,
               photoURL:downloadURL,
             });
+            console.log("update profile");
             await setDoc(doc(db,"users",res.user.uid),{
               uid:res.user.uid,
               displayName,
               email,
               photoURL:downloadURL,
             });
+            console.log("update document");
             await setDoc(doc(db,"userChats",res.user.uid),{})
             navigate("/");
           });
@@ -59,11 +63,12 @@ function Register() {
                     <MdOutlineAddPhotoAlternate size={32}/>
                     <span>Add Avatar</span>
                 </label>
-                <button>Sign up</button>
-                {err && <span>Something went wrong</span>}
+                <button>Sign Up</button>
+                {err && NotificationManager.info("loading...")}
             </form>
             <p>already have an account? <Link to="/login">Login</Link></p>
         </div>
+        <NotificationContainer/>
     </div>
   )
 }

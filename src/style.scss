@@ -168,6 +168,11 @@
             padding: 20px;
         }
     }
+    span{
+        padding: 10px;
+        display:flex;
+        justify-content: center;
+    }
 }
 .sidebar{
     display: flex;
@@ -179,8 +184,9 @@
 }
 .userChat{
     display: flex;
-    padding: 10px;
+    padding:10px;
     align-items: center;
+    position: relative;
     height: 12vh;
     gap:20px;
     color: rgb(78, 51, 51);
@@ -200,6 +206,15 @@
             font-weight: bold;
         }
         
+    }
+    .time{
+        font-size: 13px;
+        position: absolute;
+        right: 6px;
+    }
+    .addfrd{
+        position:absolute;
+        right: 20px;
     }
     
 }
@@ -222,23 +237,20 @@
             }
         }
         .dots{
-            
+            position:relative;
         }
         .dotcon{
-            display: none;
-            position:fixed;
-            background-color: rgb(253, 247, 247);
-            padding: 5px;
-            border-radius: 5px;
-        }
-        .dotcon a{
-            text-decoration: none;
+            position: absolute;
+            right: -20px;
+            top:41px;    
             color:black;
-          }
-        .dots:hover .dotcon{
-            display: block;
+            font-weight:500;
+            border-radius: 5px;
+            background-color: rgb(255, 255, 255);
+            padding:9px;
+        }.dotcon a{
+            padding: 1px 3px 5px 11px;
         }
-        
     }
     .chatIcons{
         display: flex;
@@ -315,6 +327,9 @@
         }
         .emoji{
             padding: 5px;
+            @include mobile(){
+                display: none;
+            }
         }
         .send{
             display: flex;

@@ -15,7 +15,11 @@ export const ChatContextProvider=({children})=>{
                 return{
                     ...state,
                     user:action.payload,
-                    chatId:currentUser.uid > action.payload.uid ? currentUser.uid+action.payload.uid : action.payload.uid+currentUser.uid,
+                    chatId: currentUser && currentUser.uid && action.payload && action.payload.uid
+                    ? currentUser.uid > action.payload.uid
+                      ? currentUser.uid + action.payload.uid
+                      : action.payload.uid + currentUser.uid
+                    : null, 
                 };
             case "SELECT_CHAT":
                 return{
