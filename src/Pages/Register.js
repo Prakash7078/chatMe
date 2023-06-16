@@ -27,20 +27,19 @@ function Register() {
         }, 
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
+            navigate("/login");
             await updateProfile(res.user,{
               displayName,
               photoURL:downloadURL,
             });
-            console.log("update profile");
             await setDoc(doc(db,"users",res.user.uid),{
               uid:res.user.uid,
               displayName,
               email,
               photoURL:downloadURL,
             });
-            console.log("update document");
             await setDoc(doc(db,"userChats",res.user.uid),{})
-            navigate("/");
+            
           });
           
         }
@@ -65,8 +64,9 @@ function Register() {
                 </label>
                 <button>Sign Up</button>
                 {err && NotificationManager.info("loading...")}
+                <p>already have an account? <Link to="/login">Login</Link></p>
             </form>
-            <p>already have an account? <Link to="/login">Login</Link></p>
+            
         </div>
         <NotificationContainer/>
     </div>

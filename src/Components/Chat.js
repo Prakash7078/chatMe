@@ -13,6 +13,7 @@ function Chat() {
   const{currentUser}=useContext(AuthContext);
   const{dispatch}=useContext(ChatContext);
   const[showdots,setShowdots]=useState(false);
+  const[showProfile,setShowProfile]=useState(false);
   const handleSelect=()=>{
     dispatch({type:"SELECT_CHAT",payload:false});
   }
@@ -44,7 +45,8 @@ function Chat() {
   return (
     <div className='chat'>
       <div className="chatInfo">
-        <span><div className="back" onClick={handleSelect}><IoMdReturnLeft/></div>{data.user?.displayName}</span>
+        <span><div className="back" onClick={handleSelect}><IoMdReturnLeft/></div><img className="dp"src={data.user?.photoURL} onClick={()=>setShowProfile(!showProfile)}/>{data.user?.displayName}</span>
+        {showProfile && <img className='profile' src={data.user?.photoURL}/>}
         <div className="chatIcons">
           <BiVideo/>
           

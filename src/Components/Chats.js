@@ -19,11 +19,41 @@ function Chats() {
     }
     currentUser.uid && getChats();
   },[currentUser.uid])
+
+
+  function isToday(timestamp) {
+    const today = new Date();
+    const date = timestamp.toDate(); // Convert the timestamp to a Date object
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  }
+  function isYesterday(timestamp) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1); // Subtract 1 day from today
+    const date = timestamp.toDate(); // Convert the timestamp to a Date object
+    return (
+      date.getDate() === yesterday.getDate() &&
+      date.getMonth() === yesterday.getMonth() &&
+      date.getFullYear() === yesterday.getFullYear()
+    );
+  }
+//time from timestamp
   const getTime=(timestamp)=>{
     if(timestamp){
-      const time = timestamp.toDate(); // Convert the timestamp to a Date object
-      const timeString = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      return timeString;
+      if(isToday(timestamp)){
+        return "today";
+      }else if(isYesterday(timestamp)){
+        return "yesterday";
+      }else{
+        const date=timestamp.toDate();
+        const day=date.getDate();
+        const month=date.getMonth();
+        const year=date.getFullYear();
+        return date.toLocaleDateString([], { day: '2-digit', month: '2-digit',year:'numeric' });
+      }
     }
     return ;
   }
@@ -38,7 +68,7 @@ function Chats() {
         if (chat[1]?.userInfo) {
           return (
             <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1]?.userInfo)}>
-              <img src={chat[1]?.userInfo.photoURL} alt="user" />
+              <img className="userimg"src={chat[1]?.userInfo.photoURL} alt="user" />
               <div className="userChatInfo">
                 <span>{chat[1]?.userInfo.displayName}</span>
                 <p>{chat[1]?.lastMessage?.text}</p>
