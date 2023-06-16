@@ -54,6 +54,7 @@ function Chat() {
             {data.chatId && showdots && <div className="dotcon">
               <a onClick={handleClear} className="clear">Clear</a>
               <a onClick={handleDelete}>UnFriend</a>
+              <a >settings</a>
             </div>}
           </div>
         </div>
