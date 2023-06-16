@@ -12,14 +12,14 @@
     const handleSearch=async()=>{
       setUser(null);
       setErr(true);
-      const q=query(collection(db,"users"),where("displayName","==",userName));
-      try{
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((d) => {
-          setUser(d.data());
-          setErr(false);
-        });
-      }catch(err){
+      const querySnapshot = await getDocs(collection(db, "users"));
+      const matchingUsers = querySnapshot.docs.filter((doc) =>
+        doc.data().displayName.toLowerCase() === userName.toLowerCase()
+      );
+      if (matchingUsers.length > 0) {
+        setUser(matchingUsers[0].data());
+        setErr(false);
+      } else {
         setErr(true);
       }
       
