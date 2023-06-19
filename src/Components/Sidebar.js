@@ -8,6 +8,8 @@ import { AuthContext } from '../ContextAPI/AuthContext';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 import { auth, storage } from '../firebase';
 import { ref, uploadBytes } from 'firebase/storage';
+import { NotificationManager,NotificationContainer } from 'react-notifications';
+
 function Sidebar() {
   const[showProfile,setShowProfile]=useState(false);
   const {currentUser}=useContext(AuthContext);
@@ -15,6 +17,7 @@ function Sidebar() {
   const[displayname,setDisplayname]=useState(currentUser.displayName);
   const[filename,setFilename]=useState(null);
   const[fullscreen,setFullscreen]=useState(false);
+
   const handleProfile=()=>{
     console.log("handleProfile");
     setShowProfile(!showProfile);
@@ -75,6 +78,7 @@ function Sidebar() {
           // An error occurred while updating display name
         });
     }
+    NotificationManager.info("Reload The Page");
   };
 
   
@@ -99,6 +103,7 @@ function Sidebar() {
         
       </div>}
       {fullscreen && <img className="full-img" src={currentUser.photoURL} alt='user' onClick={()=>setFullscreen(false)}/>}
+      <NotificationContainer/>
     </div>
   )
 }
