@@ -13,7 +13,6 @@ function Chat() {
   const{currentUser}=useContext(AuthContext);
   const{dispatch}=useContext(ChatContext);
   const[showdots,setShowdots]=useState(false);
-  const[showProfile,setShowProfile]=useState(false);
   const handleSelect=()=>{
     dispatch({type:"SELECT_CHAT",payload:false});
   }
@@ -41,12 +40,17 @@ function Chat() {
       Notification.error("No messages");
     }
   }
+
+  const handleFullscreen=()=>{
+    document.getElementById("dp")?.requestFullscreen();
+    
+      
+  }
  
   return (
     <div className='chat'>
       <div className="chatInfo">
-        <span><div className="back" onClick={handleSelect}><IoMdReturnLeft/></div><img className="dp"src={data.user?.photoURL} onClick={()=>setShowProfile(!showProfile)}/>{data.user?.displayName}</span>
-        {showProfile && <img className='profile' src={data.user?.photoURL}/>}
+        <span><div className="back" onClick={handleSelect}><IoMdReturnLeft/></div><div className="user-img"><img id="dp"src={data.user?.photoURL} onClick={handleFullscreen}/></div>{data.user?.displayName}</span>
         <div className="chatIcons">
           <BiVideo/>
           

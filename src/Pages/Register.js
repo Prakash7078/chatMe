@@ -9,7 +9,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 function Register() {
   const[err,setErr]=useState(false);
-  const navigate=useNavigate();
+  const navigate =useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const displayName = e.target[0].value;
@@ -19,17 +19,12 @@ function Register() {
   
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-  
-      await new Promise((resolve, reject) => {
-        const storageRef = ref(storage, displayName);
-        const uploadTask = uploadBytesResumable(storageRef, file);
+      const storageRef = ref(storage, displayName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
   
         uploadTask.on(
-          "state_changed",
-          (snapshot) => {},
           (error) => {
             setErr(true);
-            reject(error);
           },
           () => {
             getDownloadURL(uploadTask.snapshot.ref)
@@ -46,18 +41,10 @@ function Register() {
                   photoURL: downloadURL,
                 });
                 await setDoc(doc(db, "userChats", res.user.uid), {});
-  
-                resolve();
+                navigate("/");
               })
-              .catch((error) => {
-                setErr(true);
-                reject(error);
-              });
           }
         );
-      });
-  
-      navigate("/login");
     } catch (err) {
       setErr(true);
     }
