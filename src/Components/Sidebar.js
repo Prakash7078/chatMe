@@ -92,7 +92,7 @@ function Sidebar() {
         </div>
       </div>}
       {showProfile && !fullscreen && <div className='profile'>
-        <img id="dp"src={currentUser.photoURL} alt='User'onClick={()=>setFullscreen(true)}/>
+        <img id="pro-img"src={currentUser.photoURL} alt='User'onClick={()=>setFullscreen(true)}/>
         {edit && <div><input style={{display:"none"}} type='file' id="file" onChange={(e)=>setFilename(e.target.files[0])}/>
         <label htmlFor='file' className='uploadpic'>
           <MdOutlineAddPhotoAlternate size={30}/>
