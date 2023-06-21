@@ -4,6 +4,7 @@
   import { AuthContext } from '../ContextAPI/AuthContext';
   import { BsFillPersonPlusFill } from 'react-icons/bs';
   import { BsFillChatRightTextFill } from 'react-icons/bs';
+import { ChatContext } from '../ContextAPI/ChatContext';
 
   function Search() {
     const[userName,setUserName]=useState(" ");
@@ -11,6 +12,7 @@
     const[err,setErr]=useState(false);
     const[exist,setExist]=useState(false);
     const {currentUser}=useContext(AuthContext);
+    const{data,dispatch}=useContext(ChatContext);
     useEffect(() => {
       const checkExistence = async () => {
         const combinedId =
@@ -40,7 +42,10 @@
         setErr(true);
       }
     };
-    
+    const handleChoose=(u)=>{
+      dispatch({type:"CHANGE_USER",payload:u});
+      dispatch({type:"SELECT_CHAT",payload:true});
+    }
     const handleSelect=async()=>{
       const combinedId=currentUser.uid > user.uid ? currentUser.uid+user.uid : user.uid+currentUser.uid;
       try{
@@ -89,7 +94,7 @@
           </div>
           <div className="addfrd">
             {!exist && <BsFillPersonPlusFill onClick={handleSelect}/>}
-            {exist && <BsFillChatRightTextFill onClick={handleSelect}/>}
+            {exist && <BsFillChatRightTextFill onClick={handleChoose(user)}/>}
           </div>
         </div>}
       </div>
