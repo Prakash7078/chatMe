@@ -1,29 +1,46 @@
-  import React, { useContext, useState } from 'react'
+  import React, { useContext, useEffect, useState } from 'react'
   import { collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
   import { db } from '../firebase';
   import { AuthContext } from '../ContextAPI/AuthContext';
   import { BsFillPersonPlusFill } from 'react-icons/bs';
+  import { BsFillChatRightTextFill } from 'react-icons/bs';
 
   function Search() {
     const[userName,setUserName]=useState(" ");
     const[user,setUser]=useState(null);
     const[err,setErr]=useState(false);
+    const[exist,setExist]=useState(false);
     const {currentUser}=useContext(AuthContext);
-    const handleSearch=async()=>{
+    useEffect(() => {
+      const checkExistence = async () => {
+        const combinedId =
+          currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;
+        const res1 = await getDoc(doc(db, 'chats', combinedId));
+        setExist(res1.exists());
+      };
+      if (user) {
+        checkExistence();
+      }
+    }, [user]);
+    const handleSearch = async () => {
       setUser(null);
-      setErr(true);
+      setErr(false);
+      if(userName.length<=1){
+        return ;
+      }
       const querySnapshot = await getDocs(collection(db, "users"));
       const matchingUsers = querySnapshot.docs.filter((doc) =>
-        doc.data().displayName.toLowerCase() === userName.toLowerCase()
+        doc.data().displayName.toLowerCase().includes(userName.toLowerCase())
       );
+    
       if (matchingUsers.length > 0) {
         setUser(matchingUsers[0].data());
         setErr(false);
       } else {
         setErr(true);
       }
-      
     };
+    
     const handleSelect=async()=>{
       const combinedId=currentUser.uid > user.uid ? currentUser.uid+user.uid : user.uid+currentUser.uid;
       try{
@@ -55,11 +72,14 @@
       setUser(null);
       setUserName(" ");
     }
+    const handleChange=(e)=>{
+      setUserName(e.target.value);
+      handleSearch();
+    }
     return (
       <div className='search'>
         <div className="searchform">
-          <input type="text" placeholder='Search User'onChange={e=>setUserName(e.target.value)} />
-          <button onClick={handleSearch}>Search</button>
+          <input type="text" placeholder='Search User'onChange={handleChange} />
         </div>
         {err && <span>User not Found!</span>}
         {user && <div className="userChat" >
@@ -68,7 +88,8 @@
             <span>{user.displayName}</span>
           </div>
           <div className="addfrd">
-            <BsFillPersonPlusFill onClick={handleSelect}/>
+            {!exist && <BsFillPersonPlusFill onClick={handleSelect}/>}
+            {exist && <BsFillChatRightTextFill onClick={handleSelect}/>}
           </div>
         </div>}
       </div>

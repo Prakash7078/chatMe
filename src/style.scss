@@ -262,14 +262,6 @@
             }
             padding: 20px;
         }
-        button{
-            background-color:transparent;
-            height:fit-content;
-            cursor: pointer;
-            border-radius: 5px;
-            padding: 4px;
-            border: 0.5px solid rgb(110, 99, 99);
-        }
     }
     span{
         padding: 10px;
@@ -289,17 +281,18 @@
         width: 100%;
         height: 50%;
         position: absolute;
-        top:30%;
+        top:25%;
         bottom: 50%;
         object-fit: cover;
     }
 }
+
 .userChat{
     display: flex;
     padding:10px;
     align-items: center;
     position: relative;
-    height: 12vh;
+    height: 11vh;
     gap:20px;
     color: rgb(78, 51, 51);
     cursor: pointer;
@@ -326,15 +319,16 @@
     }
     .addfrd{
         position:absolute;
-        right: 20px;
+        right: 25px;
     }
     
 }
+
 .chat{
     .chatInfo{
         display: flex;   
         justify-content: space-between;
-        padding: 17px;
+        padding: 16px;
         background-color: rgb(75, 170, 75);
         position: relative;
         span{
@@ -354,11 +348,13 @@
                 height: 32px;
                 border-radius:50px;
                 padding-right: 10px;
+               
                 #dp {
                     width: 30px;
                     height: 30px;
                     object-fit: cover;
                     cursor: pointer;
+                    
                 }
             }  
         }
