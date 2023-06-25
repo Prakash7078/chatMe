@@ -42,10 +42,7 @@ import { ChatContext } from '../ContextAPI/ChatContext';
         setErr(true);
       }
     };
-    const handleChoose=(u)=>{
-      dispatch({type:"CHANGE_USER",payload:u});
-      dispatch({type:"SELECT_CHAT",payload:true});
-    }
+   
     const handleSelect=async()=>{
       const combinedId=currentUser.uid > user.uid ? currentUser.uid+user.uid : user.uid+currentUser.uid;
       try{
@@ -70,6 +67,10 @@ import { ChatContext } from '../ContextAPI/ChatContext';
             [combinedId+".date"]:serverTimestamp()
           });
 
+        }else{
+          console.log("message choose");
+          dispatch({type:"CHANGE_USER",payload:user});
+          dispatch({type:"SELECT_CHAT",payload:true});
         }
       }catch(err){
         setErr(true);
@@ -94,7 +95,7 @@ import { ChatContext } from '../ContextAPI/ChatContext';
           </div>
           <div className="addfrd">
             {!exist && <BsFillPersonPlusFill onClick={handleSelect}/>}
-            {exist && <BsFillChatRightTextFill onClick={handleChoose(user)}/>}
+            {exist && <BsFillChatRightTextFill onClick={handleSelect()}/>}
           </div>
         </div>}
       </div>
