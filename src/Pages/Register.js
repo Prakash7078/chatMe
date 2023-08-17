@@ -26,7 +26,7 @@ function Register() {
           (error) => {
             setErr(true);
           },
-          () => {
+          async() =>{
             getDownloadURL(uploadTask.snapshot.ref)
               .then(async (downloadURL) => {
                 await updateProfile(res.user, {
@@ -46,6 +46,7 @@ function Register() {
           }
         );
     } catch (err) {
+      NotificationManager.error("Email must be unique");
       setErr(true);
     }
   };

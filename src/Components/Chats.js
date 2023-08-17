@@ -4,6 +4,7 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { AuthContext } from '../ContextAPI/AuthContext';
 import { ChatContext } from '../ContextAPI/ChatContext';
+import robo from '../img/robo.jpg';
 function Chats() {
   const[chats,setChats]=useState([]);
   const{currentUser}=useContext(AuthContext);
@@ -64,6 +65,7 @@ function Chats() {
   
   return (
     <div className="chats">
+      
       {Object.entries(chats)?.sort((a, b) => (b[1]?.date || 0) - (a[1]?.date || 0)).map((chat) => {
         if (chat[1]?.userInfo) {
           return (
